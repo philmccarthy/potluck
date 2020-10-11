@@ -61,6 +61,7 @@ class PotluckTest < Minitest::Test
   end
 
   def test_potluck_can_report_ratio_of_dishes_in_category
+    # skip
     potluck = Potluck.new("7-13-18")
     couscous_salad = Dish.new("Couscous Salad", :appetizer)
     summer_pizza = Dish.new("Summer Pizza", :appetizer)

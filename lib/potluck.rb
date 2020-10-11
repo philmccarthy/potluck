@@ -15,19 +15,24 @@ class Potluck
     end
   end
 
-  def menu
-    menu_by_category = Hash.new {|hash, key| hash[key] = []}
-    @dishes.each do |dish|
-      menu_by_category[(dish.category.to_s + "s").to_sym] << dish.name
+  def group_by_category
+    @dishes.group_by do |dish|
+      ((dish.category.to_s) + 's').to_sym
     end
-    menu = {}
-    menu_by_category.each do |category, dish_name|
-      menu[category] = dish_name.sort
-    end
-    menu
   end
 
+def menu
+  menu_hash = group_by_category
+  menu_hash.each_value do |dishes|
+    dishes.map! do |dish|
+      dish.name
+    end.sort!
+  end
+end
+
+
   def ratio(category)
-    (menu[(category.to_s + "s").to_sym].size.to_f) / (@dishes.size) * 100
+    sorted_menu = menu
+    (get_all_from_category(category).size.to_f / @dishes.size) * 100
   end
 end
